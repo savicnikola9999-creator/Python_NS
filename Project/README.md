@@ -80,7 +80,7 @@ plt.show()
 
 ### Results
 
-![Visualisation](Images\skill_demand_data_roles.png)
+![Visualisation](Images/skill_demand_data_roles.png)
 
 ### Insights
 ### Insights
