@@ -37,9 +37,12 @@ import seaborn as sns
 from datasets import load_dataset
 import matplotlib.pyplot as plt  
 
-# Loading Data
-dataset = load_dataset('lukebarousse/data_jobs')
-df = dataset['train'].to_pandas()
+# Loading Data - only data for 2023
+# dataset = load_dataset('lukebarousse/data_jobs')
+# df = dataset['train'].to_pandas()
+
+# Loading Data - 2023, 2024, 2025 and first half of 2026:
+df = pd.read_csv(r"C:\Users\Nikola S\Desktop\Luke B\job_postings_flat.csv")
 
 # Data Cleanup
 df['job_posted_date'] = pd.to_datetime(df['job_posted_date'])
@@ -68,13 +71,28 @@ View my notebook with detailed steps here: [2_skill_demand](./2_skill_demand.ipy
 ### Visualize Data
 
 ```python
-fig, ax = plt.subplots(len(job_titles), 1)
-
+fig, ax = plt.subplots(len(job_titles),1)
+sns.set_theme(style="ticks")
 
 for i, job_title in enumerate(job_titles):
-    df_plot = df_skills_perc[df_skills_perc['job_title_short'] == job_title].head(5)[::-1]
-    sns.barplot(data=df_plot, x='skill_percent', y='job_skills', ax=ax[i], hue='skill_count', palette='dark:b_r')
+    df_plot = df_skills_perc[df_skills_perc["job_title_short"] == job_title].head(5)
+    sns.barplot(data=df_plot, x="skill_perc", y="job_skills", ax=ax[i],  hue="skill_perc", palette="dark:b_r")
+    # df_plot.plot(kind="barh", x="job_skills", y="skill_perc", ax=ax[i], title = job_title)
+    #ax[i].invert_yaxis()
+    ax[i].set_ylabel("")
+    ax[i].set_title(job_title)
+    ax[i].legend().set_visible(False)
+    ax[i].set_xlim(0,80)
+    ax[i].set_xlabel("")
+    sns.despine(ax=ax[i])
 
+    for n,v in enumerate(df_plot["skill_perc"]):
+        ax[i].text(v+1, n, f"{v:.0f}%", va="center")
+    if i != len(job_titles)-1:
+        ax[i].set_xticks([])
+
+fig.suptitle("Likelihood of Skills Requested in Serbia Job Postings")
+fig.tight_layout()
 plt.show()
 ```
 
@@ -90,3 +108,43 @@ plt.show()
 - **Data Engineers** have the strongest demand for both SQL and Python (72%), while cloud and big-data technologies such as AWS, Azure, and Databricks also play an important role.
 - **Data Scientists** are particularly Python-oriented, with Python appearing in 73% of job postings, substantially ahead of SQL (49%).
 - Overall, the results suggest that **Python and SQL provide the strongest foundation for working across different data careers in Serbia**, while role-specific tools become increasingly important depending on the career path.
+
+## 2. How are in-demand skills trending for Data Analysts?
+
+To find how skills are trending in 2025 for Data Analysts, I filtered data analyst positions and grouped the skills by the month of the job postings. This got me the top 5 skills of data analysts by month, showing how popular skills were throughout 2025.
+
+View my notebook with detailed steps here: [3_Skills_Trend](3_Skill_trend.ipynb).
+
+### Visualize Data
+
+```python
+
+df_plot = df_DA_USA_perc.iloc[:,:5]
+
+sns.lineplot(data=df_plot, dashes=False, palette="tab10")
+sns.set_theme(style="ticks")
+
+plt.title("Tranding top skills in Data Analyst in USA")
+plt.ylabel("Likelihod in Job posting %")
+plt.xlabel(2025)
+sns.despine()
+
+plt.legend().remove()
+
+
+offsets = [0, 3, 1, -2, -2]
+for i in range(5):
+   plt.text(12.2, df_plot.iloc[-1, i] + offsets[i], df_plot.columns[i])
+
+```
+
+### Results
+![Visualisation](Images/trandig_top_skills.png)
+*Bar graph visualizing the trending top skills for data analysts in the US in 2025.*
+
+### Insights:
+- **SQL remains the most consistently demanded skill throughout the year**, increasing from around 48% in January to nearly 60% by the end of the year, with demand peaking above 60% in several months.
+- **Excel is consistently the second most demanded skill**, remaining relatively stable at around 40–46% of job postings throughout the year.
+- **Python shows an overall upward trend**, rising from approximately 32% at the beginning of the year and reaching close to 40% in some later months.
+- **Tableau also shows a moderate upward trend**, increasing from around 26% in January to above 30% toward the end of the year.
+- **Power BI experiences the largest relative increase during the year**, rising from around 20% in January to above 30% in the later months, although it drops noticeably in December.
