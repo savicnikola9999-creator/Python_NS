@@ -177,7 +177,6 @@ plt.show()
 #### Insights
 
 
-
 - **Senior Data Scientist positions have the highest typical salaries**, with the highest median salary among the six data roles, followed closely by Senior Data Engineers.
 
 - **Seniority has a clear impact on compensation.** Senior Data Scientists, Data Engineers, and Data Analysts generally have higher median salaries than their corresponding non-senior roles.
