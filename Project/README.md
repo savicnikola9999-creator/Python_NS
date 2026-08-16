@@ -100,7 +100,7 @@ plt.show()
 
 ![Visualisation](Images/skill_demand_data_roles.png)
 
-### Insights
+
 ### Insights
 
 - **SQL and Python are the most important skills across data roles**, appearing among the top two skills for Data Analysts, Data Engineers, and Data Scientists.
