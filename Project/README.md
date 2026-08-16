@@ -140,6 +140,7 @@ for i in range(5):
 
 ### Results
 ![Visualisation](Images/trandig_top_skills.png)
+
 *Bar graph visualizing the trending top skills for data analysts in the US in 2025.*
 
 ### Insights:
@@ -220,6 +221,7 @@ fig.tight_layout()
 Here's the breakdown of the highest-paid & most in-demand skills for data analysts in the US:
 
 ![The Highest Paid & Most In-Demand Skills for Data Analysts in the US](Images/pay_VS_demand.png)
+
 *Two separate bar graphs visualizing the highest paid skills and most in-demand skills for data analysts in the US.*
 
 #### Insights:
