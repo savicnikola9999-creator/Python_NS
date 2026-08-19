@@ -234,3 +234,133 @@ Here's the breakdown of the highest-paid & most in-demand skills for data analys
 - There is a noticeable difference between **high-paying niche skills and commonly demanded skills**. Specialized technologies can be associated with substantially higher salaries, but they may appear in far fewer job postings.
 
 - Overall, the results suggest that Data Analysts can benefit from combining **widely demanded core skills such as SQL, Python, and BI tools with more specialized technologies** that may offer higher salary potential.
+
+
+## 4. What are the most optimal skills to learn for Data Analysts?
+
+To identify the most optimal skills to learn ( the ones that are the highest paid and highest in demand) I calculated the percent of skill demand and the median salary of these skills. To easily identify which are the most optimal skills to learn. 
+
+View my notebook with detailed steps here: [5_Optimal_Skills](5_optimal_skills.ipynb).
+
+#### Visualize Data
+
+```python
+from adjustText import adjust_text
+
+df_DA_skills_high_demand.plot(kind="scatter", x="skill_perc", y="median_salary")
+
+ax = plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos: f'${int(y/1000)}K'))  
+
+text = []
+
+for i,txt in enumerate(df_DA_skills_high_demand.index):
+    text.append(plt.text(df_DA_skills_high_demand["skill_perc"].iloc[i], df_DA_skills_high_demand["median_salary"].iloc[i], " " + txt))
+
+adjust_text(text, arrowprops=dict(arrowstyle='->', color='gray'))
+
+plt.xlabel("Percent of job postings")
+plt.ylabel("Median Salary")
+plt.title("Optimal skills for Data Analyst in US")
+plt.show()
+
+```
+
+#### Results
+
+![Most Optimal Skills for Data Analysts in the US](Images/Optimal_skill_for_DA_in_US.png)    
+*A scatter plot visualizing the most optimal skills (high paying & high demand) for data analysts in the US.*
+
+#### Insights:
+
+- **Snowflake stands out as the highest-paying skill**, with a median salary of approximately $114K, despite appearing in only around 5% of Data Analyst job postings. This suggests that specialized cloud data platform skills may command a significant salary premium.
+
+- **Python offers a strong combination of demand and salary**, appearing in roughly 30% of job postings while maintaining a median salary of around $100K. This makes it one of the most attractive skills in terms of both market demand and earning potential.
+
+- **SQL is by far the most frequently requested skill**, appearing in approximately 45% of job postings, while offering a median salary of around $97K. Its high demand reinforces its importance as a core skill for Data Analysts.
+
+- **Excel is also highly demanded**, appearing in nearly 38% of postings, but is associated with a noticeably lower median salary of around $86K compared with SQL and Python.
+
+- Overall, the results suggest that **Python and SQL provide a particularly strong balance between demand and salary**, while specialized technologies such as Snowflake may offer higher earning potential despite being required in fewer positions.
+
+
+
+### Visualizing Different Techonologies
+
+Let's visualize the different technologies as well in the graph. We'll add color labels based on the technology (e.g., {Programming: Python})
+
+#### Visualize Data
+
+```python
+sns.scatterplot(data=df_DA_skills_tech_high_demand, x='skill_perc', y='median_salary', hue='technology')
+
+sns.despine()
+sns.set_theme(style='ticks')
+
+# Prepare texts for adjustText
+texts = []
+for i, txt in enumerate(df_DA_skills_high_demand.index):
+    texts.append(plt.text(df_DA_skills_high_demand['skill_perc'].iloc[i], df_DA_skills_high_demand['median_salary'].iloc[i], txt))
+
+# Adjust text to avoid overlap
+adjust_text(texts, arrowprops=dict(arrowstyle='->', color='gray'))
+
+# Set axis labels, title, and legend
+plt.xlabel('Percent of Data Analyst Jobs')
+plt.ylabel('Median Yearly Salary')
+plt.title('Most Optimal Skills for Data Analysts in the US')
+plt.legend(title='Technology')
+
+ax = plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos: f'${int(y/1000)}K'))
+
+
+# Adjust layout and display plot 
+plt.tight_layout()
+plt.show()
+
+```
+
+#### Results
+
+![Most Optimal Skills for Data Analysts in the US with Coloring by Technology](Images/optimal_skills_by_type_of_technology.png)  
+*A scatter plot visualizing the most optimal skills (high paying & high demand) for data analysts in the US with color labels for technology.*
+
+#### Insights:
+
+- **Programming skills provide a strong combination of demand and salary.** Python stands out in particular, appearing in around 30% of Data Analyst job postings while offering a median salary of approximately $100K. SQL is even more widely demanded, appearing in roughly 45% of postings with a median salary of around $97K.
+
+- **Cloud technologies show the highest salary potential.** Snowflake has the highest median salary at approximately $114K, while Azure and Oracle are also around $100K. However, these technologies appear in a relatively small share of Data Analyst job postings.
+
+- **Analyst tools are widely demanded but generally associated with lower median salaries.** Tableau and Power BI offer median salaries of around $95K, while Excel is required in a large share of postings but has a lower median salary of approximately $86K.
+
+- **Python appears to offer one of the strongest overall combinations of salary and demand**, while SQL remains the most widely requested skill. Snowflake represents a potentially valuable specialization due to its exceptionally high median salary, although its demand is much lower.
+
+- Overall, the analysis suggests that a strong Data Analyst skill set should combine **core programming skills such as SQL and Python, widely used analytical tools, and selected cloud technologies** to balance employability and earning potential.
+
+# What I Learned
+
+Throughout this project, I strengthened both my Python skills and my understanding of the data analyst job market. Some of the key things I learned include:
+
+- **Data Manipulation with Pandas:** I improved my ability to filter, group, aggregate, reshape, and clean large datasets using Pandas.
+- **Data Visualization:** I gained more experience using Matplotlib and Seaborn to create visualizations such as bar charts, line charts, box plots, and scatter plots.
+- **Working with Real-World Data:** The project showed me that real-world datasets require careful cleaning and validation before meaningful conclusions can be drawn.
+- **Turning Data into Insights:** Beyond writing Python code, I practiced interpreting results and translating them into meaningful conclusions about skill demand, salaries, and job market trends.
+- **Understanding the Data Analyst Job Market:** The analysis helped me better understand which skills are most frequently requested and how demand for different technologies relates to salary levels.
+
+# Challenges I Faced
+
+Working with a large real-world dataset presented several challenges:
+
+- **Missing Data:** Some variables, particularly salary and skill information, contained missing values and required careful handling depending on the analysis.
+- **Comparing Different Markets:** Data availability differed between Serbia and the United States, so I had to adapt the geographical scope of individual analyses while clearly indicating which market was being examined.
+- **Choosing Appropriate Visualizations:** Selecting charts that clearly communicated the results required experimentation with different visualization techniques and formatting.
+- **Interpreting Results:** High salaries associated with less common skills required careful interpretation, since a high median salary does not necessarily mean that a skill provides the greatest number of job opportunities.
+
+# Conclusion
+
+This project gave me practical experience applying Python to a large real-world dataset and helped me move beyond simply learning individual Python functions toward using them as part of a complete data analysis workflow.
+
+From a job-market perspective, the analysis shows that **SQL and Python provide a strong foundation for Data Analyst roles**, combining relatively high demand with competitive salaries. Tools such as Excel, Power BI, and Tableau remain important for employability, while more specialized technologies such as Snowflake and Azure can be associated with higher salaries but appear in fewer job postings.
+
+Overall, the project reinforced the importance of balancing **market demand, salary potential, and specialization** when deciding which skills to develop.
