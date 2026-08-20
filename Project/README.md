@@ -1,8 +1,11 @@
 # Overview
 
-Welcome to my analysis of the data job market, focusing on data analyst roles. This project was created out of a desire to navigate and understand the job market more effectively. It delves into the top-paying and in-demand skills to help find optimal job opportunities for data analysts.
 
-The data sourced from [Luke Barousse's Python Course](https://lukebarousse.com/python) which provides a foundation for my analysis, containing detailed information on job titles, salaries, locations, and essential skills. Through a series of Python scripts, I explore key questions such as the most demanded skills, salary trends, and the intersection of demand and salary in data analytics.
+Welcome to my analysis of the data job market, focusing on data analyst roles. This project was created out of a desire to better understand and navigate the job market while also strengthening my Python skills through practical, hands-on data analysis.
+
+The project serves both as an exploration of the data analyst job market and as an opportunity to apply and deepen my knowledge of Python, particularly in data cleaning, manipulation, analysis, and visualization.
+
+The data is sourced from [Luke Barousse's Python Course](https://lukebarousse.com/python), which provides the foundation for my analysis and contains detailed information on job titles, salaries, locations, and essential skills. Through a series of Python scripts, I explore key questions such as the most demanded skills, salary trends, and the intersection of skill demand and salary in data analytics.
 
 # The Questions
 
@@ -37,11 +40,11 @@ import seaborn as sns
 from datasets import load_dataset
 import matplotlib.pyplot as plt  
 
-# Loading Data - only data for 2023
+# #Loading Data from Hugging Face - 2023 only
 # dataset = load_dataset('lukebarousse/data_jobs')
 # df = dataset['train'].to_pandas()
 
-# Loading Data - 2023, 2024, 2025 and first half of 2026:
+# Loading Data from Local CSV - 2023, 2024, 2025, and H1 2026
 df = pd.read_csv(r"C:\Users\Nikola S\Desktop\Luke B\job_postings_flat.csv")
 
 # Data Cleanup
@@ -53,7 +56,7 @@ df['job_skills'] = df['job_skills'].apply(lambda x: ast.literal_eval(x) if pd.no
 
 Depending on the question and data availability, the analysis focuses either on the Serbian or the U.S. job market. The relevant country filter is applied accordingly and clearly indicated in each analysis.
 
-### United States
+### United States and Serbia
 
 ```python
 df_US = df[df['job_country'] == 'United States']
